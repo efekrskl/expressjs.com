@@ -1,0 +1,35 @@
+name: Check broken URLs
+
+on:
+  push:
+    branches: ["gh-pages"]
+  pull_request:
+    branches: ["gh-pages"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  check-urls:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@ab177d40ee5483edb974554986f56b33477e21d0 # https://github.com/ruby/setup-ruby/releases/tag/v1.265.0
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          cache-version: 0 # Increment this number if you need to re-download cached gems
+      - name: Build with Jekyll
+        # Outputs to the './_site' directory by default
+        run: bundle exec jekyll build
+      - name: Check URLs
+        shell: bash
+        run: docker run -t --rm -it -u $(id -u):$(id -g) -v "$PWD":/mnt ghcr.io/linkchecker/linkchecker:latest /mnt/_site/
