@@ -32,4 +32,4 @@ jobs:
         run: bundle exec jekyll build
       - name: Check URLs
         shell: bash
-        run: docker run -t --rm -it -u $(id -u):$(id -g) -v "$PWD":/mnt ghcr.io/linkchecker/linkchecker:latest /mnt/_site/
+        run: docker run --rm -u $(id -u):$(id -g) -v "$PWD":/mnt ghcr.io/linkchecker/linkchecker:latest /mnt/_site/
