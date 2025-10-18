@@ -52,7 +52,7 @@ jobs:
           echo "has_failures=true" >> "$GITHUB_OUTPUT"
 
           echo "body<<EOF" >> "$GITHUB_OUTPUT"
-          echo "**Broken links checklist**" >> "$GITHUB_OUTPUT"
+          echo -e "**Broken links checklist**\n(occurrence) (file) (target URL)" >> "$GITHUB_OUTPUT"
           echo "" >> "$GITHUB_OUTPUT"
 
           # Format to a checklist
