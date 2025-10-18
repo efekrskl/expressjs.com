@@ -1,0 +1,24 @@
+on:
+  schedule:
+    - cron: '0 8 1 * *'
+  pull_request:
+    types: [ labeled ]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  my-broken-link-checker:
+    if: |
+      github.event_name != 'pull_request' ||
+      github.event.label.name == 'link check'
+    name: Check broken links
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check for broken links
+        uses: ruzickap/action-my-broken-link-checker@v2
+        with:
+          url: https://www.expressjs.com
+          cmd_params: "--accepted-status-codes='200..300,403,429' --buffer-size=65536 --max-connections-per-host=1 --color=always --ignore-fragments --exclude=\"(googleusercontent\\.com|gstatic\\.com|googlesyndication\\.com|adtrafficquality\\.google|google\\.com|npmjs\\.org|npmjs\\.com|registry\\.npmjs\\.org|docs\\.npmjs\\.com)\""
