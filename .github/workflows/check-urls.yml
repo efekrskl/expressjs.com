@@ -23,7 +23,7 @@ jobs:
         continue-on-error: true
         run: |
           docker run --rm \
-            ghcr.io/ruzickap/mybrokenlinkchecker:latest \
+            raviqqe/muffet:latest \
             https://www.expressjs.com \
             --buffer-size=65536 \
             --max-connections-per-host=1 \
