@@ -22,15 +22,13 @@ jobs:
         shell: bash
         continue-on-error: true
         run: |
-          docker run --rm \
-            raviqqe/muffet:latest \
-            https://www.expressjs.com \
+          docker run --rm raviqqe/muffet:latest \
             --buffer-size=65536 \
             --max-connections-per-host=1 \
             --timeout=10 \
             --color=always \
             --ignore-fragments \
-            --accepted-status-codes='200..300,403,429' \
-            2>&1 \ 
-            | grep -vE 'https?://([a-z0-9-]+\.)?expressjs\.com(/|$)' \
-            | sort -u || true
+            --accepted-status-codes=200..300,403,429 \
+            https://www.expressjs.com \
+            2>&1 | grep -vE 'https?://([a-z0-9-]+\.)?expressjs\.com(/|$)' \
+            | awk '!seen[$0]++' || true
