@@ -43,17 +43,27 @@ jobs:
 
       - name: Format failures as checklist
         id: format
-        if: success() || failure()  # always run
         run: |
-          if [ -s failures.log ]; then
-            awk 'NF {print "- [ ] " $0}' failures.log | head -n 100 > checklist.md
-            echo "has_failures=true" >> "$GITHUB_OUTPUT"
-            echo "body<<EOF" >> "$GITHUB_OUTPUT"
-            cat checklist.md >> "$GITHUB_OUTPUT"
-            echo "EOF" >> "$GITHUB_OUTPUT"
-          else
+          if [ ! -s failures.log ]; then
             echo "has_failures=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+
+          echo "has_failures=true" >> "$GITHUB_OUTPUT"
+
+          echo "body<<EOF" >> "$GITHUB_OUTPUT"
+          echo "**Broken links checklist**" >> "$GITHUB_OUTPUT"
+          echo "" >> "$GITHUB_OUTPUT"
+
+          # Simplify: remove noise and keep useful info
+          sed \
+            -e 's#file:///mnt/_site/##g' \
+            -e 's/[()'\'']//g' \
+            -e 's/, / → /g' \
+            -e 's/^/ - [ ] /' \
+            failures.log | head -n 400 >> "$GITHUB_OUTPUT"
+
+          echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: Comment checklist on PR
         if: github.event_name == 'pull_request' && steps.format.outputs.has_failures == 'true'
