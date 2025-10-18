@@ -20,4 +20,4 @@ jobs:
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: https://www.expressjs.com
-          cmd_params: "--buffer-size=65536 --max-connections-per-host=1 --color=always --ignore-fragments --exclude=\"(googleusercontent\\.com|gstatic\\.com|googlesyndication\\.com|adtrafficquality\\.google|google\\.com|npmjs\\.org|npmjs\\.com|registry\\.npmjs\\.org|docs\\.npmjs\\.com)\""
+          cmd_params: "--rate-limit=2 --buffer-size=65536 --max-connections-per-host=1 --color=always --ignore-fragments --exclude=\"(googleusercontent\\.com|gstatic\\.com|googlesyndication\\.com|adtrafficquality\\.google|google\\.com|npmjs\\.org|npmjs\\.com|registry\\.npmjs\\.org|docs\\.npmjs\\.com)\""
