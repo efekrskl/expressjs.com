@@ -1,35 +1,21 @@
-name: Broken Links Checker
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '12 1 * * 5'
+    - cron: '0 0 * * 0'
   pull_request:
     types: [ labeled ]
 
-env:
-  WEBSITE_URL: "https://expressjs.com/"
-  ISSUE_TEMPLATE: ".github/workflows/check-broken-links.md"
-
+name: Check markdown links
 jobs:
-  linkcheck:
+  my-broken-link-checker:
     if: |
       github.event_name != 'pull_request' ||
       github.event.label.name == 'link check'
+    name: Check broken links
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-          
+
     steps:
-      - name: Run Broken Links Checker
-        run: npx broken-link-checker $WEBSITE_URL --ordered --recursive --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/109.0" --exclude linkedin --exclude "udemy" --exclude "ude.my" --exclude "eia.gov" --exclude "backpack.tf" --exclude hlsw --exclude dell --exclude supermicro --exclude mysql --exclude glassdoor
-
-      - uses: actions/checkout@v3
-        if: failure()
-
-      - uses: JasonEtco/create-an-issue@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check for broken links
+        uses: ruzickap/action-my-broken-link-checker@v2
         with:
-          filename: ${{ env.ISSUE_TEMPLATE }}
-        if: failure()
+          url: https://www.expressjs.com
+          cmd_params: "--max-connections-per-host=1 --color=always"
