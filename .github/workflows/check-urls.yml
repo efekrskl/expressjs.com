@@ -16,7 +16,10 @@ jobs:
       github.event_name != 'pull_request' ||
       github.event.label.name == 'link check'
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      issues: write
+          
     steps:
       - name: Run Broken Links Checker
         run: npx broken-link-checker $WEBSITE_URL --ordered --recursive --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/109.0" --exclude linkedin --exclude "udemy" --exclude "ude.my" --exclude "eia.gov" --exclude "backpack.tf" --exclude hlsw --exclude dell --exclude supermicro --exclude mysql --exclude glassdoor
