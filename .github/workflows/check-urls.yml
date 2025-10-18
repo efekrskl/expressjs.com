@@ -27,7 +27,7 @@ jobs:
             https://www.expressjs.com \
             --buffer-size=65536 \
             --max-connections-per-host=1 \
-            --timeout=10s \
+            --timeout=10 \
             --color=always \
             --skip-fragments \
             --accepted-status-codes='200..300,403,429' \
