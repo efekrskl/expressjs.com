@@ -8,12 +8,12 @@ permissions:
   contents: read
   pull-requests: read
 
+name: Check markdown links
 jobs:
-  my-broken-link-checker:
+  check-broken-links:
     if: |
       github.event_name != 'pull_request' ||
       github.event.label.name == 'link check'
-    name: Check broken links
     runs-on: ubuntu-latest
 
     steps:
