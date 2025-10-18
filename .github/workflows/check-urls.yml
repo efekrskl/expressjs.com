@@ -16,20 +16,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check for broken links
-      uses: ruzickap/action-my-broken-link-checker@v2
-      with:
-        url: https://www.expressjs.com
-        cmd_params: >
-          --buffer-size=65536
-          --max-connections-per-host=1
-          --color=always
-          --exclude=https://*.googleusercontent.com
-          --exclude=https://*.gstatic.com
-          --exclude=https://*.googlesyndication.com
-          --exclude=https://*.adtrafficquality.google
-          --exclude=https://*.google.com/*
-          --exclude=https://www.npmjs.org/*
-          --exclude=https://x.com/*
-          --exclude=https://twitter.com/*
-          --exclude=https://t.co/*
+      - name: Check for broken links
+        uses: ruzickap/action-my-broken-link-checker@v2
+        with:
+          url: https://www.expressjs.com
+          cmd_params: "--buffer-size=65536 --max-connections-per-host=1 --color=always --exclude=https://*.googleusercontent.com --exclude=https://*.gstatic.com --exclude=https://*.googlesyndication.com --exclude=https://*.adtrafficquality.google --exclude=https://*.google.com/* --exclude=https://www.npmjs.org/* --exclude=https://x.com/* --exclude=https://twitter.com/* --exclude=https://t.co/*"
