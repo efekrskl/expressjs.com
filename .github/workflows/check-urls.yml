@@ -29,6 +29,6 @@ jobs:
             --max-connections-per-host=1 \
             --timeout=10 \
             --color=always \
-            --skip-fragments \
+            --ignore-fragments \
             --accepted-status-codes='200..300,403,429' \
             2>&1 | grep -vE 'https?://([a-z0-9-]+\.)?expressjs\.com(/|$)' || true
