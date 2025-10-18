@@ -55,13 +55,14 @@ jobs:
           echo "**Broken links checklist**" >> "$GITHUB_OUTPUT"
           echo "" >> "$GITHUB_OUTPUT"
 
-          # Simplify: remove noise and keep useful info
+          # Format to a checklist
+          # (occurrences) (found in) (target URL)
           sed \
             -e 's#file:///mnt/_site/##g' \
-            -e 's/[()'\'']//g' \
-            -e 's/, / → /g' \
+            -e "s/[()'\"']//g" \
+            -e 's/, / -> /g' \
             -e 's/^/ - [ ] /' \
-            failures.log | head -n 400 >> "$GITHUB_OUTPUT"
+            failures.log | head -n 100 >> "$GITHUB_OUTPUT"
 
           echo "EOF" >> "$GITHUB_OUTPUT"
 
@@ -70,9 +71,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            **Broken links checklist**
-            ${{ steps.format.outputs.body }}
+          body: ${{ steps.format.outputs.body }}
 
       - name: Open/update monthly issue with checklist
         if: github.event_name != 'pull_request' && steps.format.outputs.has_failures == 'true'
