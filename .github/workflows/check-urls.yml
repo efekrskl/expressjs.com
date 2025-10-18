@@ -18,4 +18,4 @@ jobs:
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: https://www.expressjs.com
-          cmd_params: "--max-connections-per-host=1 --color=always"
+          cmd_params: "--buffer-size=8192 --max-connections-per-host=1 --color=always"
