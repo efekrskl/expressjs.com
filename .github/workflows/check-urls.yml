@@ -24,7 +24,6 @@ jobs:
           --buffer-size=65536
           --max-connections-per-host=1
           --color=always
-          --timeout=10s
           --exclude=https://*.googleusercontent.com
           --exclude=https://*.gstatic.com
           --exclude=https://*.googlesyndication.com
