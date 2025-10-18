@@ -23,4 +23,4 @@ jobs:
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: https://www.expressjs.com
-          cmd_params: "--accepted-status-codes='200..300,403' --buffer-size=65536 --max-connections-per-host=1 --color=always --ignore-fragments --exclude=\"(github\\.com|githubusercontent\\.com|gist\\.github\\.com|api\\.github\\.com|googleusercontent\\.com|gstatic\\.com|googlesyndication\\.com|adtrafficquality\\.google|google\\.com|npmjs\\.org|npmjs\\.com|registry\\.npmjs\\.org|docs\\.npmjs\\.com)\""
+          cmd_params: "--accepted-status-codes='200..300,403,429' --buffer-size=65536 --max-connections-per-host=1 --color=always --ignore-fragments --exclude=\"(googleusercontent\\.com|gstatic\\.com|googlesyndication\\.com|adtrafficquality\\.google|google\\.com|npmjs\\.org|npmjs\\.com|registry\\.npmjs\\.org|docs\\.npmjs\\.com)\""
