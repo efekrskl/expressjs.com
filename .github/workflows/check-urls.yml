@@ -23,4 +23,4 @@ jobs:
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: https://www.expressjs.com
-          cmd_params: "--buffer-size=65536 --max-connections-per-host=1 --color=always --ignore-fragments --exclude=\"^https?://(?!([a-z0-9-]+\\.)?expressjs\\.com(/|$)).+\""
+          cmd_params: "--buffer-size=65536 --max-connections-per-host=1 --timeout=10s --color=always --ignore-fragments --include=\"^https?://([a-z0-9-]+\\.)?expressjs\\.com(/|$)\""
