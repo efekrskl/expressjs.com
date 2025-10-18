@@ -28,7 +28,7 @@ jobs:
         run: bundle exec jekyll build
       - name: Check URLs
         shell: bash
-        run: docker run --rm -u $(id -u):$(id -g) -v "$PWD":/mnt ghcr.io/linkchecker/linkchecker:latest /mnt/_site/ \
+        run: docker run --rm -u $(id -u):$(id -g) -v "$PWD":/mnt ghcr.io/linkchecker/linkchecker:10.6.0 /mnt/_site/ \
             --timeout=10 \
             --ignore-url='^mailto:' \
-            --recursion-level=3
+            --recursion-level=6
