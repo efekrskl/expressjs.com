@@ -34,4 +34,3 @@ jobs:
           --exclude=https://x.com/*
           --exclude=https://twitter.com/*
           --exclude=https://t.co/*
-          --exclude=https://expressjs.com/cdn-cgi/*
