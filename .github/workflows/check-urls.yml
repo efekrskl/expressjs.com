@@ -1,15 +1,14 @@
-name: Check links on expressjs.com
-
+name: Broken Links Checker
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 8 1 * *' # first of each month at 08:00 UTC
+    - cron: '12 1 * * 5'
   pull_request:
-    types: [labeled]
+    types: [ labeled ]
 
-permissions:
-  contents: read
-  pull-requests: read
+env:
+  WEBSITE_URL: "https://expressjs.com/"
+  ISSUE_TEMPLATE: ".github/workflows/check-broken-links.md"
 
 jobs:
   linkcheck:
@@ -19,7 +18,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check links on expressjs.com
-        uses: filiph/linkcheck@3.0.0
+      - name: Run Broken Links Checker
+        run: npx broken-link-checker $WEBSITE_URL --ordered --recursive --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/109.0" --exclude linkedin --exclude "udemy" --exclude "ude.my" --exclude "eia.gov" --exclude "backpack.tf" --exclude hlsw --exclude dell --exclude supermicro --exclude mysql --exclude glassdoor
+
+      - uses: actions/checkout@v3
+        if: failure()
+
+      - uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          arguments: "https://expressjs.com"
+          filename: ${{ env.ISSUE_TEMPLATE }}
+        if: failure()
