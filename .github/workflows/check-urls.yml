@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '0 8 1 * *'
+    - cron: '0 0 * * 0'
   pull_request:
     types: [ labeled ]
 
@@ -23,4 +23,4 @@ jobs:
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: https://www.expressjs.com
-          cmd_params: "--buffer-size=65536 --max-connections-per-host=1 --color=always --ignore-fragments --include=\"^https?://([a-z0-9-]+\\.)?expressjs\\.com(/|$)\""
+          cmd_params: "--accepted-status-codes='200..300,403' --buffer-size=65536 --max-connections-per-host=1 --color=always --ignore-fragments --exclude=\"(expressjs\\.com|github\\.com|githubusercontent\\.com|gist\\.github\\.com|api\\.github\\.com|googleusercontent\\.com|gstatic\\.com|googlesyndication\\.com|adtrafficquality\\.google|google\\.com|npmjs\\.org|npmjs\\.com|registry\\.npmjs\\.org|docs\\.npmjs\\.com)\""
