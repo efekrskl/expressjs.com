@@ -31,4 +31,6 @@ jobs:
             --color=always \
             --ignore-fragments \
             --accepted-status-codes='200..300,403,429' \
-            2>&1 | grep -vE 'https?://([a-z0-9-]+\.)?expressjs\.com(/|$)' || true
+            2>&1 \ 
+            | grep -vE 'https?://([a-z0-9-]+\.)?expressjs\.com(/|$)' \
+            | sort -u || true
