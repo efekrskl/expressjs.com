@@ -37,9 +37,10 @@ jobs:
         run: |
           docker run --rm -u $(id -u):$(id -g) -v "$PWD":/mnt ghcr.io/linkchecker/linkchecker:10.6.0 /mnt/_site/ \
           --file-output=failures/utf-8//mnt/failures.log \
-          --timeout=5 \
+          --timeout=10 \
           --ignore-url='^mailto:' \
-          --recursion-level=5
+          --recursion-level=5 \
+          --check-extern
 
       - name: Format failures as checklist
         id: format
