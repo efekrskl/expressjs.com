@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 8 1 * *'
+  pull_request:
+    types: [labeled]
 
 permissions:
   contents: write
@@ -11,7 +13,11 @@ permissions:
 
 jobs:
   check-urls:
+    if: |
+      github.event_name != 'pull_request' ||
+      github.event.label.name == 'link check'
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
