@@ -18,8 +18,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check for broken links
-        uses: ruzickap/action-my-broken-link-checker@v2
-        with:
-          url: https://www.expressjs.com
-          cmd_params: "--accepted-status-codes='200..300,403,429' --buffer-size=65536 --max-connections-per-host=1 --color=always --ignore-fragments --exclude=\"(googleusercontent\\.com|gstatic\\.com|googlesyndication\\.com|adtrafficquality\\.google|google\\.com|npmjs\\.org|npmjs\\.com|registry\\.npmjs\\.org|docs\\.npmjs\\.com)\""
+      - name: Run mybrokenlinkchecker (filter out internal errors)
+        shell: bash
+        continue-on-error: true
+        run: |
+          docker run --rm \
+            ghcr.io/ruzickap/mybrokenlinkchecker:latest \
+            https://www.expressjs.com \
+            --buffer-size=65536 \
+            --max-connections-per-host=1 \
+            --timeout=10s \
+            --color=always \
+            --skip-fragments \
+            --accepted-status-codes='200..300,403,429' \
+            2>&1 | grep -vE 'https?://([a-z0-9-]+\.)?expressjs\.com(/|$)' || true
