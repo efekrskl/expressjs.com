@@ -27,7 +27,7 @@ jobs:
             --color=always \
             --ignore-fragments \
             --accepted-status-codes=200..300,403,429 \
-            --exclude "(googleusercontent\\.com|gstatic\\.com|googlesyndication\\.com|adtrafficquality\\.google|google\\.com|npmjs\\.org|npmjs\\.com|registry\\.npmjs\\.org|docs\\.npmjs\\.com|twitter\\.com|x\\.com|t\\.co)" \
+            --exclude "(localhost|127\\.0\\.0\\.1|0\\.0\\.0\\.0|\\[?::1\\]?|googleusercontent\\.com|gstatic\\.com|googlesyndication\\.com|adtrafficquality\\.google|google\\.com|npmjs\\.org|npmjs\\.com|registry\\.npmjs\\.org|docs\\.npmjs\\.com|twitter\\.com|x\\.com|t\\.co)" \
             https://www.expressjs.com \
             2>&1 | grep -vE 'https?://([a-z0-9-]+\.)?expressjs\.com(/|$)' \
             | awk '!seen[$0]++' || true
